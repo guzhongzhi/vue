@@ -63,9 +63,10 @@
           placeholder="Select time">
         </el-time-select>
 
-      <button type="submit" class="btn btn-default"  v-bind:disabled="isButtonDisabled"  v-on:click="doLogin()">Submit</button>
+        <button type="button" class="btn btn-default"  v-bind:disabled="isButtonDisabled"  v-on:click="doLogin()">Submit</button>
       </div>
     </form>
+
     <span>{{result}}</span>
   </div>
 </template>
