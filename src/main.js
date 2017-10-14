@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 import $ from 'jquery'
 import vSelect from 'vue-select'
+import Element from 'element-ui'
 
+Vue.use(Element)
 Vue.component('v-select', vSelect)
 
 Vue.prototype.utils = {
@@ -20,20 +22,24 @@ tools.showLoadingMasker = function () {
 tools.hideLoadingMasker = function () {
 
 }
-tools.responseHandler = function (response, callbacker) {
-  // Vue.utils.hideLoadingMasker()
-  callbacker(response)
-}
 Vue.use(tools)
 
 $.extend(Vue.prototype.utils, {
   getJSON: function (url, data, callbacker) {
     tools.showLoadingMasker()
-    $.getJSON(url, data, tools.responseHandler)
+    $.getJSON(url, data, function (response) {
+      // Vue.utils.hideLoadingMasker()
+      console.log(callbacker)
+      callbacker(response)
+    })
   },
   postJSON: function (url, data, callbacker) {
     tools.showLoadingMasker()
-    $.postJSON(url, data, tools.responseHandler)
+    $.postJSON(url, data, function (response) {
+      // Vue.utils.hideLoadingMasker()
+      console.log(callbacker)
+      callbacker(response)
+    })
   }
 })
 

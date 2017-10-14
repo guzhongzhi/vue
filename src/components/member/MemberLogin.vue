@@ -44,6 +44,25 @@
       <div class="form-group">
         <v-select multiple v-model="selected" :options="[{'label':'bbb','value':'1'}]"></v-select>
 
+        <v-select
+          :debounce="250"
+          :on-search="getOptions"
+          :options="options"
+          placeholder="Search GitHub Repositories..."
+          label="label"
+        >
+        </v-select>
+
+        <el-time-select
+          v-model="value1"
+          :picker-options="{
+    start: '08:30',
+    step: '00:15',
+    end: '18:30'
+  }"
+          placeholder="Select time">
+        </el-time-select>
+
       <button type="submit" class="btn btn-default"  v-bind:disabled="isButtonDisabled"  v-on:click="doLogin()">Submit</button>
       </div>
     </form>
@@ -63,18 +82,31 @@
         msg: 'Welcome to Your Vue.js App',
         result: 'try to login',
         isButtonDisabled: false,
-        selected: ['1']
+        selected: ['1'],
+        options: [],
+        value1: ''
       }
     },
     methods: {
       doSomeThing: function () {
         alert('F')
       },
+      getOptions (search, loading) {
+        // loading(true)
+        let _self = this
+        this.utils.getJSON('/api/member/types', {
+          q: search
+        }, function (response) {
+          console.log(response)
+          // loading(false)
+          _self.options = response
+        })
+      },
       doLogin: function () {
         swal('Hello world!')
         var _self = this
         _self.isButtonDisabled = true
-        _self.utils.getJSON('/api/member/doLogin', function (response) {
+        _self.utils.getJSON('/api/member/doLogin', {}, function (response) {
           console.log(response)
           _self.result = response.username
         })
