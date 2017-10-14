@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import $ from 'jquery'
+import vSelect from 'vue-select'
+
+Vue.component('v-select', vSelect)
 
 Vue.prototype.utils = {
 
@@ -33,8 +36,6 @@ $.extend(Vue.prototype.utils, {
     $.postJSON(url, data, tools.responseHandler)
   }
 })
-console.log(Vue.utils)
-$('body')
 
 Vue.config.productionTip = false
 

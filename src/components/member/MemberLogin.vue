@@ -22,6 +22,14 @@
         <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
       </div>
       <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <select class="form-control select2">
+        <option>test1</option>
+        <option>test2</option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="exampleInputFile">File input</label>
         <input type="file" id="exampleInputFile">
         <p class="help-block">Example block-level help text here.</p>
@@ -34,7 +42,7 @@
       </div>
       </div>
       <div class="form-group">
-
+        <v-select multiple v-model="selected" :options="[{'label':'bbb','value':'1'}]"></v-select>
 
       <button type="submit" class="btn btn-default"  v-bind:disabled="isButtonDisabled"  v-on:click="doLogin()">Submit</button>
       </div>
@@ -44,14 +52,18 @@
 </template>
 <script>
   import swal from 'sweetalert'
+
   export default {
+    mounted () {
+    },
     name: 'MemberLogin',
     _self: this,
     data () {
       return {
         msg: 'Welcome to Your Vue.js App',
         result: 'try to login',
-        isButtonDisabled: false
+        isButtonDisabled: false,
+        selected: ['1']
       }
     },
     methods: {
