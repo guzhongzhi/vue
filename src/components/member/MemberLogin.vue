@@ -43,6 +43,7 @@
   </div>
 </template>
 <script>
+  import swal from 'sweetalert'
   export default {
     name: 'MemberLogin',
     _self: this,
@@ -58,6 +59,7 @@
         alert('F')
       },
       doLogin: function () {
+        swal('Hello world!')
         var _self = this
         _self.isButtonDisabled = true
         _self.utils.getJSON('/api/member/doLogin', function (response) {
