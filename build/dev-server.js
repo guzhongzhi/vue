@@ -27,6 +27,10 @@ const proxyTable = config.dev.proxyTable
 const app = express()
 const compiler = webpack(webpackConfig)
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 var mockDir = path.resolve(__dirname, '../mock');
 fs.readdirSync(mockDir).forEach(function (file) {
@@ -36,7 +40,11 @@ fs.readdirSync(mockDir).forEach(function (file) {
     res.header("Content-Type","text/json");
     res.header('charset', 'utf8');
     var mock = require(path.resolve(mockDir, file));
-    res.send(JSON.stringify(mock.data) + "\r\n");
+    if(mock.callbacker) {
+      mock.callbacker(req,res);
+    }else {
+      res.send(JSON.stringify(mock.data) + "\r\n");
+    }
   });
 });
 

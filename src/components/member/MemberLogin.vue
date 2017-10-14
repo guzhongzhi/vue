@@ -2,14 +2,16 @@
   <div id="login">
     <form class="form-inline">
       <div class="form-group">
-        <label for="exampleInputName2">Name</label>
-        <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+        <label for="email">Email: </label>
+        <input class="form-control" v-validate v-model="loginForm.username" data-vv-rules="required|email" :class="{'input': true, 'is-danger': errors.has('email') }" name="email" id="email" type="text" placeholder="Email">
+        <span fv-shfow="errors.has('email')" style="display: none" class="help is-danger">{{ errors.first('email') }}</span>
       </div>
+
       <div class="form-group">
-        <label for="exampleInputEmail2">Email</label>
-        <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+        <label for="password">Password: </label>
+        <input type="password" class="form-control" v-model="loginForm.password" v-validate data-vv-rules="required|min:6" id="password" name="password">
       </div>
-      <button type="submit" class="btn btn-default">Send invitation</button>
+      <button type="button"  :disabled="errors.any()" class="btn btn-default"  v-on:click="doLogin()">Send invitation</button>
     </form>
 
     <form class="">
@@ -85,7 +87,11 @@
         isButtonDisabled: false,
         selected: ['1'],
         options: [],
-        value1: ''
+        value1: '',
+        loginForm: {
+          username: '',
+          password: ''
+        }
       }
     },
     methods: {
@@ -104,12 +110,18 @@
         })
       },
       doLogin: function () {
-        swal('Hello world!')
         var _self = this
+        if (this.loginForm.username === '' || this.loginForm.password.length < 6) {
+          swal('请输入用户名和密码!')
+          return false
+        }
         _self.isButtonDisabled = true
-        _self.utils.getJSON('/api/member/doLogin', {}, function (response) {
-          console.log(response)
-          _self.result = response.username
+        _self.utils.postJSON('/api/member/doLogin', this.loginForm, function (response) {
+          if (response.code !== 200) {
+            swal('提示', response.message, 'error')
+          } else {
+            swal(response.data.username + '登陆成功')
+          }
         })
       }
     }
