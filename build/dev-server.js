@@ -31,7 +31,7 @@ const compiler = webpack(webpackConfig)
 var mockDir = path.resolve(__dirname, '../mock');
 fs.readdirSync(mockDir).forEach(function (file) {
   var mock = require(path.resolve(mockDir, file));
-  console.log(mock.api, mock.response)
+  console.log(mock.api)
   app.use(mock.api, function(req,res){
     res.header("Content-Type","text/json");
     res.header('charset', 'utf8');

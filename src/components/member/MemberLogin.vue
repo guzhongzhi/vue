@@ -6,7 +6,6 @@
   </div>
 </template>
 <script>
-  import $ from 'jquery'
   export default {
     name: 'MemberLogin',
     _self: this,
@@ -22,7 +21,7 @@
       },
       doLogin: function () {
         var _self = this
-        $.getJSON('/api/member/doLogin', function (response) {
+        _self.utils.getJSON('/api/member/doLogin', function (response) {
           console.log(response)
           _self.result = response.username
         })
