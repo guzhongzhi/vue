@@ -2,10 +2,21 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import CommonFooter from './components/CommonFooter'
+import CommonHead from './components/CommonHead'
 import router from './router'
 import $ from 'jquery'
 import vSelect from 'vue-select'
 import Element from 'element-ui'
+
+Vue.component('common_header', {
+  template: '<CommonHead/>',
+  components: { CommonHead }
+})
+Vue.component('common_footer', {
+  template: '<CommonFooter/>',
+  components: { CommonFooter }
+})
 
 Vue.use(Element)
 Vue.component('v-select', vSelect)
